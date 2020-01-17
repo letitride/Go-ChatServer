@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gorilla/websocket"
+	"go-tools/trace"
 	"log"
 	"net/http"
 )
@@ -11,6 +12,7 @@ type room struct {
 	join    chan *client
 	leave   chan *client
 	clients map[*client]bool
+	tracer  trace.Tracer
 }
 
 func newRoom() *room {
@@ -27,6 +29,7 @@ func (r *room) run() {
 		select {
 		case client := <-r.join:
 			r.clients[client] = true
+			r.tracer.Trace("新しいクライアントが参加しました")
 		case client := <-r.leave:
 			delete(r.clients, client)
 			close(client.send)
