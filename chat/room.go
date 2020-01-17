@@ -33,13 +33,16 @@ func (r *room) run() {
 		case client := <-r.leave:
 			delete(r.clients, client)
 			close(client.send)
+			r.tracer.Trace("新しいクライアントが退室しました")
 		case msg := <-r.forward:
 			for client := range r.clients {
 				select {
 				case client.send <- msg:
+					r.tracer.Trace(" -- クライアントに送信されました")
 				default:
 					delete(r.clients, client)
 					close(client.send)
+					r.tracer.Trace(" -- 送信に失敗しました。クライアントをクリーンアップします")
 				}
 			}
 		}
