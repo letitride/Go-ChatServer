@@ -2,11 +2,9 @@ package main
 
 import (
 	"flag"
-	"go-tools/trace"
 	"html/template"
 	"log"
 	"net/http"
-	"os"
 	"path/filepath"
 	"sync"
 )
@@ -31,7 +29,9 @@ func main() {
 
 	//予めroomを作成
 	r := newRoom()
-	r.tracer = trace.New(os.Stdout)
+	//r.tracer = trace.New(os.Stdout)
+
+	//templateHandlerのServeHTTPが実行される
 	http.Handle("/", &templateHandler{filename: "chat.html"})
 	//クライアントからroomにアクセスがあった時のハンドラ
 	http.Handle("/room", r)

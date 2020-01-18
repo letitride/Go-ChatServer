@@ -1,7 +1,6 @@
 package trace
 
 import "io"
-
 import "fmt"
 
 // Tracer はログ記録できるオブジェクトのインターフェース
@@ -23,4 +22,13 @@ func (t *tracer) Trace(a ...interface{}) {
 // New はインターフェースTracerを返すメソッド
 func New(w io.Writer) Tracer {
 	return &tracer{out: w}
+}
+
+type nilTracer struct{}
+
+func (t *nilTracer) Trace(a ...interface{}) {}
+
+// Off はnilTracerrを返すメソッド
+func Off() Tracer {
+	return &nilTracer{}
 }
