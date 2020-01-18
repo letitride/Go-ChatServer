@@ -32,6 +32,7 @@ func main() {
 	//r.tracer = trace.New(os.Stdout)
 
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
+	http.Handle("/login", &templateHandler{filename: "login.html"})
 	//クライアントからroomにアクセスがあった時のハンドラ
 	http.Handle("/room", r)
 	//ch listen
