@@ -31,8 +31,7 @@ func main() {
 	r := newRoom()
 	//r.tracer = trace.New(os.Stdout)
 
-	//templateHandlerのServeHTTPが実行される
-	http.Handle("/", &templateHandler{filename: "chat.html"})
+	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	//クライアントからroomにアクセスがあった時のハンドラ
 	http.Handle("/room", r)
 	//ch listen
