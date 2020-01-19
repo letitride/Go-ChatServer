@@ -1,4 +1,4 @@
 /go-tools
 /go.mod
 /go.sum
-
+/chat/.env
