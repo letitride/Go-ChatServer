@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"go-tools/trace"
 	"html/template"
 	"log"
 	"net/http"
@@ -50,8 +51,8 @@ func main() {
 	)
 
 	//予めroomを作成
-	r := newRoom()
-	//r.tracer = trace.New(os.Stdout)
+	r := newRoom(UseAuthAvatar)
+	r.tracer = trace.New(os.Stdout)
 
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
