@@ -71,6 +71,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		authCookieValue := objx.New(map[string]interface{}{
 			"name":       user.Name(),
 			"avatar_url": user.AvatarURL(),
+			"email":      user.Email(),
 		}).MustBase64()
 		//base64した文字列をauthというキー名でcookieに保存
 		http.SetCookie(w, &http.Cookie{
