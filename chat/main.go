@@ -59,6 +59,8 @@ func main() {
 	http.Handle("/upload", &templateHandler{filename: "upload.html"})
 	http.HandleFunc("/auth/", loginHandler)
 	http.HandleFunc("/uploader", uploaderHandler)
+	//path avatarsをstripし、残りのurlパラメータをhttp.FileServerに渡す
+	http.Handle("/avatars/", http.StripPrefix("/avatars/", http.FileServer(http.Dir("./avatars"))))
 	http.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, &http.Cookie{
 			Name:   "auth",
